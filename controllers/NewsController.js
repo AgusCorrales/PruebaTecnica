@@ -70,6 +70,15 @@ const NewsController ={
           res.status(500).send({ message: "There was a problem with your notlike" });
         }
       },
+      async getLikedNews(req, res) {
+        try {
+          const news = await News.find({ likes: { $exists: true, $ne: [] } });
+          res.status(200).send(news);
+        } catch (error) {
+          console.error(error);
+          res.status(500).send({ message: 'Problem loading liked news' });
+        }
+      }
 };
 
 
